@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS Components Example</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <base href="/"> <!-- Base URL -->
+</head>
+<body>
+    <!-- Navigation Component -->
+    <app-nav></app-nav>
+
+    <div class="container" style="margin-top: 70px;">
+        <div ng-view></div> <!-- This is where routed views will be injected -->
+    </div>
+
+    <!-- AngularJS Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular-route.js"></script>
+    <script src="app/app.config.js"></script>
+    <script src="app/app.module.js"></script>
+    <script src="app/components/nav/nav.component.js"></script>
+    <script src="app/components/table/table.component.js"></script>
+    <script src="app/views/kanban/kanban.component.js"></script>
+</body>
+</html>
