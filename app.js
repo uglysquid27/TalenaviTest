@@ -1,27 +1,34 @@
-// Include the app.module.js and app.config.js in this file
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 var myApp = angular.module('myApp', ['ngRoute']); // Define the main module
 
 // Configure routes
-myApp.config(function ($routeProvider) {
+myApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'app/views/home.view.html',
-            controller: 'HomeController'
+            template: '<table-component></table-component>'  // Use the table component here
         })
-        .when('/about', {
-            templateUrl: 'app/views/about.view.html',
-            controller: 'AboutController'
+        .when('/kanban', {
+            template: '<kanban></kanban>'  // Use the kanban component here
         })
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/'  // Default route
         });
-});
 
-// Define controllers
-myApp.controller('HomeController', ['$scope', function ($scope) {
-    $scope.message = "Welcome to the Home Page!";
+    // Use hashbang mode for compatibility without server configuration
+    $locationProvider.hashPrefix('!');
+
+    console.log('Routes configured.');  // Debug log to check route configuration
 }]);
 
-myApp.controller('AboutController', ['$scope', function ($scope) {
-    $scope.message = "Welcome to the About Page!";
+// Define controllers (if needed for components like TableController)
+myApp.controller('TableController', ['$scope', function ($scope) {
+    console.log('TableController loaded.');
+    // Your logic here
+}]);
+
+myApp.controller('KanbanController', ['$scope', function ($scope) {
+    console.log('KanbanController loaded.');
+    // Your logic here
 }]);

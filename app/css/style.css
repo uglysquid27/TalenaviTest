@@ -1,3 +1,49 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "bootstrap/dist/css/bootstrap.min.css";
+html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .bg-custom {
+    background-color: #181c34;
+  }
+  .developer-cell {
+    text-align: center;
+    padding: 10px;
+    position: relative; /* Make sure it's relative to the cell */
+  }
+  
+  .developer-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+  }
+  
+  .developer-name {
+    position: absolute;
+    top: -40%; /* Move the tooltip up relative to the icon */
+    right: -10px; /* Move the tooltip to the right of the icon */
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10; /* Ensure it appears above other elements */
+  }
+  
+  .developer-cell:hover .developer-name {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .search-input-with-icon {
+    background: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/svgs/solid/magnifying-glass.svg') no-repeat left 10px center;
+    background-size: 16px 16px;
+    padding-left: 35px; /* Space for the icon */
+}
+
+  
