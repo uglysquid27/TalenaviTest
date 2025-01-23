@@ -39,13 +39,32 @@
             </div>
           </div>
 
-        <!-- Filter Button -->
-        <div class="col-auto">
-            <button class="p-3 btn btn-sm btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#filterModal">
-                <i class="fa fa-sort"></i> Filter
-            </button>
+          <!-- Sort Dropdown -->
+          <div class="col-auto">
+            <div class="dropdown">
+                <button class="btn btn-sm btn-warning dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-sort"></i> Sort
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item" href="#" ng-click="vm.toggleSortColumn('status')">Status</a></li>
+                    <li><a class="dropdown-item" href="#" ng-click="vm.toggleSortColumn('priority')">Priority</a></li>
+                    <li><a class="dropdown-item" href="#" ng-click="vm.toggleSortColumn('type')">Type</a></li>
+                </ul>
+            </div>
         </div>
-        
+
+        <!-- Sort Order Dropdown -->
+        <div class="col-auto">
+            <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="sortOrderDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Sort Order
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortOrderDropdown">
+                    <li><a class="dropdown-item" href="#" ng-click="vm.setSortOrder('asc')">Ascending</a></li>
+                    <li><a class="dropdown-item" href="#" ng-click="vm.setSortOrder('desc')">Descending</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <!-- Table Component -->
