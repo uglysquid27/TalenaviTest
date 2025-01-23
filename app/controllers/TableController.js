@@ -26,6 +26,25 @@ angular.module('myApp')
         });
     };
 
+    // Add a new item temporarily and add it to the top of the list
+    vm.addNewItem = function() {
+      var newItem = {
+        title: 'New Task',  // Placeholder title
+        developer: 'New Developer',  // Placeholder developer
+        status: 'Pending',  // Placeholder status
+        priority: 'Medium',  // Placeholder priority
+        type: 'Feature',  // Placeholder type
+        date: 'N/A',  // Placeholder date
+        'Estimated SP': 0,  // Placeholder estimated SP
+        'Actual SP': 0,  // Placeholder actual SP
+        isEditing: false  // New item starts without editing mode
+      };
+      
+      // Add the new item to the top of the list
+      vm.items.unshift(newItem);
+      vm.filteredItems.unshift(newItem);  // Ensure it's included in the filtered list
+    };
+
     // Toggle the selected column for sorting (only status, priority, type)
     vm.toggleSortColumn = function(column) {
       if (['status', 'priority', 'type'].includes(column)) { // Only allow these columns for sorting

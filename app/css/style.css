@@ -40,10 +40,84 @@ html, body {
     opacity: 1;
   }
 
-  .search-input-with-icon {
-    background: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/svgs/solid/magnifying-glass.svg') no-repeat left 10px center;
-    background-size: 16px 16px;
-    padding-left: 35px; /* Space for the icon */
+  .status {
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: white; /* Optional: to make the text color white */
+  }
+  
+  .status-ready {
+    background-color: #007bff; /* Blue */
+  }
+  
+  .status-in-progress {
+    background-color: #ffc107; /* Yellow */
+    color: black; 
+  }
+  
+  .status-waiting {
+    background-color: #dc3545; /* Red */
+  }
+  
+  .status-pending {
+    background-color: #17a2b8; /* Teal */
+    color: white; 
+  }
+  
+  .status-done {
+    background-color: #28a745; /* Green */
+  }
+  
+  .status-stuck {
+    background-color: #6c757d; /* Gray */
+    color: white; 
+  }
+
+  .priority {
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: white; /* Optional: to make the text color white */
 }
 
-  
+.priority-critical {
+    background-color: darkred;
+}
+
+.priority-high {
+    background-color: red;
+}
+
+.priority-medium {
+    background-color: orange;
+}
+
+.priority-low {
+    background-color: green;
+}
+
+.priority-best-effort {
+    background-color: blue;
+}
+
+.type {
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: white; /* Optional: to make the text color white */
+}
+
+.type-feature {
+    background-color: lightblue;
+}
+
+.type-enhancements {
+    background-color: lightgreen;
+}
+
+.type-other {
+    background-color: lightgray;
+}
+
+.type-bug {
+    background-color: lightcoral;
+}
+

@@ -3,10 +3,12 @@
     <div class="g-2 row">
         <!-- Add New Button -->
         <div class="col-auto">
-            <button class="p-3 btn btn-primary btn-sm" type="button">
+            <button class="p-3 btn btn-primary btn-sm" type="button" ng-click="vm.addNewItem()">
                 <i class="bi bi-plus-circle"></i> Add New
             </button>
+            
         </div>
+        
 
         <!-- Search Form -->
         <div class="col-auto">
@@ -88,9 +90,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in vm.filteredItems">
+                    <tr ng-repeat="item in vm.filteredItems" 
+                        ng-class="{
+                            'status-complete': item.status === 'Complete',
+                            'status-pending': item.status === 'Pending',
+                            'status-in-progress': item.status === 'In Progress',
+                            'priority-high': item.priority === 'High',
+                            'priority-medium': item.priority === 'Medium',
+                            'priority-low': item.priority === 'Low',
+                            'type-feature': item.type === 'Feature',
+                            'type-bug': item.type === 'Bug',
+                            'type-improvement': item.type === 'Improvement'
+                        }">
                         <td><input type="checkbox" /></td>
-                        <!-- Inline edit for Task -->
                         <td class="task-column">
                             <span ng-if="!item.isEditing" ng-click="item.isEditing = true">{{ item.title }}</span>
                             <input
@@ -102,8 +114,6 @@
                                 ng-enter="item.isEditing = false; vm.editItem(item)"
                             />
                         </td>
-                        
-                        <!-- Developer with SVG icon and tooltip -->
                         <td class="developer-cell">
                             <svg class="developer-icon" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
                                 <path opacity="0.5" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" fill="#1C274C" />
@@ -112,14 +122,40 @@
                             </svg>
                             <span class="developer-name" ng-show="true">{{ item.developer }}</span>
                         </td>
-                        <td>{{ item.status }}</td>
-                        <td>{{ item.priority }}</td>
-                        <td>{{ item.type }}</td>
+                        <td>
+                            <span class="status" ng-class="{
+                                'status-ready': item.status === 'Ready to start',
+                                'status-in-progress': item.status === 'In Progress',
+                                'status-waiting': item.status === 'Waiting for review',
+                                'status-pending': item.status === 'Pending Deploy',
+                                'status-done': item.status === 'Done',
+                                'status-stuck': item.status === 'Stuck'
+                            }">{{ item.status }}</span>
+                        </td>
+                        <td>
+                            <span class="priority" ng-class="{
+                                'priority-critical': item.priority === 'Critical',
+                                'priority-high': item.priority === 'High',
+                                'priority-medium': item.priority === 'Medium',
+                                'priority-low': item.priority === 'Low',
+                                'priority-best-effort': item.priority === 'Best Effort'
+                            }">{{ item.priority }}</span>
+                        </td>
+                        <td>
+                            <span class="type" ng-class="{
+                                'type-feature': item.type === 'Feature',
+                                'type-enhancements': item.type === 'Feature Enhancements',
+                                'type-other': item.type === 'Other',
+                                'type-bug': item.type === 'Bug'
+                            }">{{ item.type }}</span>
+                        </td>
                         <td>{{ item.date || 'N/A' }}</td>
                         <td>{{ item['Estimated SP'] }}</td>
                         <td>{{ item['Actual SP'] }}</td>
                     </tr>
                 </tbody>
+                
+                
             </table>
         </div>
     </div>
