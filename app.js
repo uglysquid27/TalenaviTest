@@ -28,7 +28,3 @@ myApp.controller('TableController', ['$scope', function ($scope) {
     // Your logic here
 }]);
 
-myApp.controller('KanbanController', ['$scope', function ($scope) {
-    console.log('KanbanController loaded.');
-    // Your logic here
-}]);
