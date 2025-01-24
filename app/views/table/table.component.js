@@ -7,6 +7,5 @@
         controllerAs: 'vm',
       });
   
-    console.log('tableComponent registered.'); // Debug log
   })();
   

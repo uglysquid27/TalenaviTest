@@ -1,7 +1,7 @@
 myApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
-            template: '<table-component></table-component>' // Match component name
+            template: '<table-component></table-component>'
         })
         .when('/kanban', {
             template: '<kanban></kanban>'
@@ -10,7 +10,5 @@ myApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $
             redirectTo: '/'
         });
 
-    // Use hashbang mode for compatibility without server configuration
     $locationProvider.hashPrefix('!');
-    console.log('Routes configured.'); // Debug log
 }]);

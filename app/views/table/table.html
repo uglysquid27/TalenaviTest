@@ -1,7 +1,5 @@
 <div class="m-0 p-0 container-fluid">
-  <!-- Row with buttons -->
   <div class="g-2 row">
-    <!-- Add New Button -->
     <div class="col-auto">
       <button
         class="p-3 btn btn-primary btn-sm"
@@ -12,7 +10,6 @@
       </button>
     </div>
 
-    <!-- Search Form -->
     <div class="col-auto">
       <form class="form-inline">
         <div class="input-group">
@@ -27,7 +24,6 @@
       </form>
     </div>
 
-    <!-- Person Button -->
     <div class="col-auto">
       <div class="dropdown">
         <button
@@ -53,7 +49,6 @@
       </div>
     </div>
 
-    <!-- Sort Dropdown -->
     <div class="col-auto">
       <div class="dropdown">
         <button
@@ -94,39 +89,12 @@
       </div>
     </div>
 
-    <!-- Sort Order Dropdown -->
-    <div class="col-auto">
-      <div class="dropdown">
-        <button
-          class="p-3 btn btn-secondary btn-sm dropdown-toggle"
-          type="button"
-          id="sortOrderDropdown"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Sort Order
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="sortOrderDropdown">
-          <li>
-            <a class="dropdown-item" href="#" ng-click="vm.setSortOrder('asc')"
-              >Ascending</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item" href="#" ng-click="vm.setSortOrder('desc')"
-              >Descending</a
-            >
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+   
 
-  <!-- Table Component -->
   <div class="py-3">
     <table class="table-bordered table">
         <thead>
-          <tr>
+          <tr class="text-center">
             <th><input type="checkbox" /></th>
             <th>Task</th>
             <th>Developer</th>
@@ -139,7 +107,7 @@
           </tr>
         </thead>
         <tbody class="table-body">
-          <tr
+          <tr class="text-center"
             ng-repeat="item in vm.filteredItems"
             ng-class="{
               'status-complete': item.status === 'Complete',
@@ -194,7 +162,7 @@
                 item.developer
               }}</span>
             </td>
-            <td>
+            <td >
               <span
                 class="status"
                 ng-class="{
@@ -208,7 +176,7 @@
                 >{{ item.status }}</span
               >
             </td>
-            <td>
+            <td >
               <span
                 class="priority"
                 ng-class="{
@@ -221,7 +189,7 @@
                 >{{ item.priority }}</span
               >
             </td>
-            <td>
+            <td >
               <span
                 class="type"
                 ng-class="{
@@ -233,7 +201,7 @@
                 >{{ item.type }}</span
               >
             </td>
-            <td>
+            <td >
               <span
                 ng-if="!item.isEditingDate"
                 ng-click="item.isEditingDate = true"
@@ -251,15 +219,15 @@
               />
             </td>
     
-            <td>{{ item['Estimated SP'] }}</td>
-            <td>{{ item['Actual SP'] }}</td>
+            <td >{{ item['Estimated SP'] }}</td>
+            <td >{{ item['Actual SP'] }}</td>
           </tr>
-          <tr>
+          <tr class="text-center">
             <td style="border: none"></td>
             <td style="border: none"></td>
             <td style="border: none"></td>
             <!-- Status Percentage -->
-            <td>
+            <td >
               <span
                 class="status status-ready"
                 ng-style="{ width: vm.statusReadyPercentage + '%' }"
@@ -298,8 +266,7 @@
               </span>
             </td>
     
-            <!-- Priority Percentage -->
-            <td>
+            <td >
               <span
                 class="priority priority-critical"
                 ng-style="{ width: vm.priorityCriticalPercentage + '%' }"
@@ -332,8 +299,7 @@
               </span>
             </td>
     
-            <!-- Type Percentage -->
-            <td>
+            <td >
               <span
                 class="type type-feature"
                 ng-style="{ width: vm.typeFeaturePercentage + '%' }"
@@ -364,11 +330,9 @@
             <td>
               <strong>{{ vm.totalEstimatedSP }}</strong>
             </td>
-            <!-- Total Estimated SP -->
             <td>
               <strong>{{ vm.totalActualSP }}</strong>
             </td>
-            <!-- Total Actual SP -->
           </tr>
         </tbody>
       </table>

@@ -1,6 +1,5 @@
 <div class="container-fluid">
   <div class="g-2 row">
-    <!-- Add New Button -->
     <div class="col-auto">
       <button
         class="p-3 btn btn-primary btn-sm"
@@ -11,7 +10,6 @@
       </button>
     </div>
 
-    <!-- Search Form -->
     <div class="col-auto">
       <form class="form-inline">
         <div class="input-group">
@@ -26,7 +24,6 @@
       </form>
     </div>
 
-    <!-- Person Button -->
     <div class="col-auto">
       <div class="dropdown">
         <button
@@ -52,7 +49,6 @@
       </div>
     </div>
 
-    <!-- Sort Dropdown -->
     <div class="col-auto">
       <div class="dropdown">
         <button
@@ -93,41 +89,16 @@
       </div>
     </div>
 
-    <!-- Sort Order Dropdown -->
-    <div class="col-auto">
-      <div class="dropdown">
-        <button
-          class="p-3 btn btn-secondary btn-sm dropdown-toggle"
-          type="button"
-          id="sortOrderDropdown"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Sort Order
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="sortOrderDropdown">
-          <li>
-            <a class="dropdown-item" href="#" ng-click="vm.setSortOrder('asc')"
-              >Ascending</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item" href="#" ng-click="vm.setSortOrder('desc')"
-              >Descending</a
-            >
-          </li>
-        </ul>
-      </div>
-    </div>
+    
   </div>
 
   <div
     style="
       display: flex;
-      gap: 16px;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      padding: 16px;
+    gap: 16px;
+    flex-wrap: wrap; 
+    overflow-x: auto;
+    padding: 16px;
     "
   >
     <div

@@ -8,6 +8,14 @@ body {
 .bg-custom {
   background-color: #181c34;
 }
+
+.bg-body-tertiary {
+  --bs-bg-opacity: 0; /* Set opacity to 0 for transparent background */
+  background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity)) !important;
+  color: white !important; /* Set font color to white */
+}
+
+
 .developer-cell {
   text-align: center;
   padding: 10px;
@@ -83,6 +91,7 @@ body {
 .status {
   padding: 2px 5px;
   color: white;
+  border-radius: 4px;
 }
 
 .status-ready {
@@ -115,6 +124,7 @@ body {
 .priority {
   padding: 2px 5px;
   color: white;
+  border-radius: 4px;
 }
 
 .priority-critical {
@@ -140,6 +150,7 @@ body {
 .type {
   padding: 2px 5px;
   color: white;
+  border-radius: 4px;
 }
 
 .type-feature {

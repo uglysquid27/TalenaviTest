@@ -8,6 +8,5 @@
         controllerAs: 'vm',
       });
   
-    console.log('kanbanComponent registered.'); // Debug log
   })();
   
