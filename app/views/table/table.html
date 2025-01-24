@@ -1,162 +1,383 @@
 <div class="m-0 p-0 container-fluid">
-    <!-- Row with buttons -->
-    <div class="g-2 row">
-        <!-- Add New Button -->
-        <div class="col-auto">
-            <button class="p-3 btn btn-primary btn-sm" type="button" ng-click="vm.addNewItem()">
-                <i class="bi bi-plus-circle"></i> Add New
-            </button>
-            
-        </div>
-        
-
-        <!-- Search Form -->
-        <div class="col-auto">
-            <form class="form-inline">
-                <div class="input-group">
-                    <input
-                        type="text"
-                        class="form-control form-control-sm py-1 rounded"
-                        placeholder="Search tasks..."
-                        ng-model="vm.searchCriteria.title"
-                        ng-change="vm.searchTasks()"
-                    />
-                </div>
-            </form>
-        </div>
-
-        <!-- Person Button -->
-        <div class="col-auto">
-            <div class="dropdown">
-              <button class="py-3 btn btn-info btn-sm dropdown-toggle" type="button" id="personDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-user-circle"></i> Person
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="personDropdown">
-                <li ng-repeat="developer in vm.developers">
-                  <a class="dropdown-item" href="#" ng-click="vm.filterByDeveloper(developer)">
-                    {{ developer }}
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Sort Dropdown -->
-          <div class="col-auto">
-            <div class="dropdown">
-                <button class="btn btn-sm btn-warning dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-sort"></i> Sort
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-                    <li><a class="dropdown-item" href="#" ng-click="vm.toggleSortColumn('status')">Status</a></li>
-                    <li><a class="dropdown-item" href="#" ng-click="vm.toggleSortColumn('priority')">Priority</a></li>
-                    <li><a class="dropdown-item" href="#" ng-click="vm.toggleSortColumn('type')">Type</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Sort Order Dropdown -->
-        <div class="col-auto">
-            <div class="dropdown">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="sortOrderDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    Sort Order
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="sortOrderDropdown">
-                    <li><a class="dropdown-item" href="#" ng-click="vm.setSortOrder('asc')">Ascending</a></li>
-                    <li><a class="dropdown-item" href="#" ng-click="vm.setSortOrder('desc')">Descending</a></li>
-                </ul>
-            </div>
-        </div>
+  <!-- Row with buttons -->
+  <div class="g-2 row">
+    <!-- Add New Button -->
+    <div class="col-auto">
+      <button
+        class="p-3 btn btn-primary btn-sm"
+        type="button"
+        ng-click="vm.addNewItem()"
+      >
+        <i class="bi bi-plus-circle"></i> Add New
+      </button>
     </div>
 
-    <!-- Table Component -->
-    <div class="mt-3 panel panel-default">
-        <div class="panel-heading">
-            <h3>Main Table</h3>
+    <!-- Search Form -->
+    <div class="col-auto">
+      <form class="form-inline">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control form-control-sm py-1 rounded"
+            placeholder="Search tasks..."
+            ng-model="vm.searchCriteria.title"
+            ng-change="vm.searchTasks()"
+          />
         </div>
-        <div class="panel-body">
-            <table class="table-bordered table">
-                <thead>
-                    <tr>
-                        <th><input type="checkbox" /></th>
-                        <th>Task</th>
-                        <th>Developer</th>
-                        <th>Status</th>
-                        <th>Priority</th>
-                        <th>Type</th>
-                        <th>Date</th>
-                        <th>Estimated SP</th>
-                        <th>Actual SP</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in vm.filteredItems" 
-                        ng-class="{
-                            'status-complete': item.status === 'Complete',
-                            'status-pending': item.status === 'Pending',
-                            'status-in-progress': item.status === 'In Progress',
-                            'priority-high': item.priority === 'High',
-                            'priority-medium': item.priority === 'Medium',
-                            'priority-low': item.priority === 'Low',
-                            'type-feature': item.type === 'Feature',
-                            'type-bug': item.type === 'Bug',
-                            'type-improvement': item.type === 'Improvement'
-                        }">
-                        <td><input type="checkbox" /></td>
-                        <td class="task-column">
-                            <span ng-if="!item.isEditing" ng-click="item.isEditing = true">{{ item.title }}</span>
-                            <input
-                                ng-if="item.isEditing"
-                                type="text"
-                                class="form-control form-control-sm"
-                                ng-model="item.title"
-                                ng-blur="item.isEditing = false; vm.editItem(item)"
-                                ng-enter="item.isEditing = false; vm.editItem(item)"
-                            />
-                        </td>
-                        <td class="developer-cell">
-                            <svg class="developer-icon" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
-                                <path opacity="0.5" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" fill="#1C274C" />
-                                <path d="M16.807 19.0112C15.4398 19.9504 13.7841 20.5 12 20.5C10.2159 20.5 8.56023 19.9503 7.193 19.0111C6.58915 18.5963 6.33109 17.8062 6.68219 17.1632C7.41001 15.8302 8.90973 15 12 15C15.0903 15 16.59 15.8303 17.3178 17.1632C17.6689 17.8062 17.4108 18.5964 16.807 19.0112Z" fill="#1C274C" />
-                                <path d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3432 6 9.00004 7.34315 9.00004 9C9.00004 10.6569 10.3432 12 12 12Z" fill="#1C274C" />
-                            </svg>
-                            <span class="developer-name" ng-show="true">{{ item.developer }}</span>
-                        </td>
-                        <td>
-                            <span class="status" ng-class="{
-                                'status-ready': item.status === 'Ready to start',
-                                'status-in-progress': item.status === 'In Progress',
-                                'status-waiting': item.status === 'Waiting for review',
-                                'status-pending': item.status === 'Pending Deploy',
-                                'status-done': item.status === 'Done',
-                                'status-stuck': item.status === 'Stuck'
-                            }">{{ item.status }}</span>
-                        </td>
-                        <td>
-                            <span class="priority" ng-class="{
-                                'priority-critical': item.priority === 'Critical',
-                                'priority-high': item.priority === 'High',
-                                'priority-medium': item.priority === 'Medium',
-                                'priority-low': item.priority === 'Low',
-                                'priority-best-effort': item.priority === 'Best Effort'
-                            }">{{ item.priority }}</span>
-                        </td>
-                        <td>
-                            <span class="type" ng-class="{
-                                'type-feature': item.type === 'Feature',
-                                'type-enhancements': item.type === 'Feature Enhancements',
-                                'type-other': item.type === 'Other',
-                                'type-bug': item.type === 'Bug'
-                            }">{{ item.type }}</span>
-                        </td>
-                        <td>{{ item.date || 'N/A' }}</td>
-                        <td>{{ item['Estimated SP'] }}</td>
-                        <td>{{ item['Actual SP'] }}</td>
-                    </tr>
-                </tbody>
-                
-                
-            </table>
-        </div>
+      </form>
     </div>
+
+    <!-- Person Button -->
+    <div class="col-auto">
+      <div class="dropdown">
+        <button
+          class="py-3 btn btn-info btn-sm dropdown-toggle"
+          type="button"
+          id="personDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa fa-user-circle"></i> Person
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="personDropdown">
+          <li ng-repeat="developer in vm.developers">
+            <a
+              class="dropdown-item"
+              href="#"
+              ng-click="vm.filterByDeveloper(developer)"
+            >
+              {{ developer }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sort Dropdown -->
+    <div class="col-auto">
+      <div class="dropdown">
+        <button
+          class="p-3 btn btn-sm btn-warning dropdown-toggle"
+          type="button"
+          id="sortDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa fa-sort"></i> Sort
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+          <li>
+            <a
+              class="dropdown-item"
+              href="#"
+              ng-click="vm.toggleSortColumn('status')"
+              >Status</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              href="#"
+              ng-click="vm.toggleSortColumn('priority')"
+              >Priority</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              href="#"
+              ng-click="vm.toggleSortColumn('type')"
+              >Type</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sort Order Dropdown -->
+    <div class="col-auto">
+      <div class="dropdown">
+        <button
+          class="p-3 btn btn-secondary btn-sm dropdown-toggle"
+          type="button"
+          id="sortOrderDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Sort Order
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="sortOrderDropdown">
+          <li>
+            <a class="dropdown-item" href="#" ng-click="vm.setSortOrder('asc')"
+              >Ascending</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" href="#" ng-click="vm.setSortOrder('desc')"
+              >Descending</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Component -->
+  <div class="mt-3 panel panel-default">
+    <div class="panel-heading">
+      <h3>Main Table</h3>
+    </div>
+    <div class="panel-body">
+      <table class="table-bordered table">
+        <thead>
+          <tr>
+            <th><input type="checkbox" /></th>
+            <th>Task</th>
+            <th>Developer</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Estimated SP</th>
+            <th>Actual SP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            ng-repeat="item in vm.filteredItems"
+            ng-class="{
+              'status-complete': item.status === 'Complete',
+              'status-pending': item.status === 'Pending',
+              'status-in-progress': item.status === 'In Progress',
+              'priority-high': item.priority === 'High',
+              'priority-medium': item.priority === 'Medium',
+              'priority-low': item.priority === 'Low',
+              'type-feature': item.type === 'Feature',
+              'type-bug': item.type === 'Bug',
+              'type-improvement': item.type === 'Improvement'
+            }"
+          >
+            <td><input type="checkbox" /></td>
+            <td class="task-column">
+              <span ng-if="!item.isEditing" ng-click="item.isEditing = true">{{
+                item.title
+              }}</span>
+              <input
+                ng-if="item.isEditing"
+                type="text"
+                class="form-control form-control-sm"
+                ng-model="item.title"
+                ng-blur="item.isEditing = false; vm.editItem(item)"
+                ng-enter="item.isEditing = false; vm.editItem(item)"
+              />
+            </td>
+            <td class="developer-cell">
+              <svg
+                class="developer-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  opacity="0.5"
+                  d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                  fill="#1C274C"
+                />
+                <path
+                  d="M16.807 19.0112C15.4398 19.9504 13.7841 20.5 12 20.5C10.2159 20.5 8.56023 19.9503 7.193 19.0111C6.58915 18.5963 6.33109 17.8062 6.68219 17.1632C7.41001 15.8302 8.90973 15 12 15C15.0903 15 16.59 15.8303 17.3178 17.1632C17.6689 17.8062 17.4108 18.5964 16.807 19.0112Z"
+                  fill="#1C274C"
+                />
+                <path
+                  d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3432 6 9.00004 7.34315 9.00004 9C9.00004 10.6569 10.3432 12 12 12Z"
+                  fill="#1C274C"
+                />
+              </svg>
+              <span class="developer-name" ng-show="true">{{
+                item.developer
+              }}</span>
+            </td>
+            <td>
+              <span
+                class="status"
+                ng-class="{
+                  'status-ready': item.status === 'Ready to start',
+                  'status-in-progress': item.status === 'In Progress',
+                  'status-waiting': item.status === 'Waiting for review',
+                  'status-pending': item.status === 'Pending Deploy',
+                  'status-done': item.status === 'Done',
+                  'status-stuck': item.status === 'Stuck'
+                }"
+                >{{ item.status }}</span
+              >
+            </td>
+            <td>
+              <span
+                class="priority"
+                ng-class="{
+                  'priority-critical': item.priority === 'Critical',
+                  'priority-high': item.priority === 'High',
+                  'priority-medium': item.priority === 'Medium',
+                  'priority-low': item.priority === 'Low',
+                  'priority-best-effort': item.priority === 'Best Effort'
+                }"
+                >{{ item.priority }}</span
+              >
+            </td>
+            <td>
+              <span
+                class="type"
+                ng-class="{
+                  'type-feature': item.type === 'Feature',
+                  'type-enhancements': item.type === 'Feature Enhancements',
+                  'type-other': item.type === 'Other',
+                  'type-bug': item.type === 'Bug'
+                }"
+                >{{ item.type }}</span
+              >
+            </td>
+            <td>
+              <span
+                ng-if="!item.isEditingDate"
+                ng-click="item.isEditingDate = true"
+              >
+                {{
+                  item.date ? (item.date | date: 'MM/dd/yyyy') : '00/00/0000'
+                }}
+              </span>
+              <input
+                ng-if="item.isEditingDate"
+                type="date"
+                class="form-control form-control-sm"
+                ng-model="item.date"
+                ng-blur="item.isEditingDate = false; vm.editDate(item)"
+                ng-focus="item.isEditingDate = true"
+                autofocus
+              />
+            </td>
+
+            <td>{{ item['Estimated SP'] }}</td>
+            <td>{{ item['Actual SP'] }}</td>
+          </tr>
+          <tr>
+            <td style="border: none"></td>
+            <td style="border: none"></td>
+            <td style="border: none"></td>
+            <!-- Status Percentage -->
+            <td>
+              <span
+                class="status status-ready"
+                ng-style="{ width: vm.statusReadyPercentage + '%' }"
+              >
+              {{ vm.statusReadyPercentage | number:1 }}%
+              </span>
+              <span
+                class="status status-in-progress"
+                ng-style="{ width: vm.statusInProgressPercentage + '%' }"
+              >
+                {{ vm.statusInProgressPercentage | number: 1 }}%
+              </span>
+              <span
+                class="status status-waiting"
+                ng-style="{ width: vm.statusWaitingPercentage + '%' }"
+              >
+                {{ vm.statusWaitingPercentage | number: 1 }}%
+              </span>
+              <span
+                class="status status-pending"
+                ng-style="{ width: vm.statusPendingPercentage + '%' }"
+              >
+                {{ vm.statusPendingPercentage | number: 1 }}%
+              </span>
+              <span
+                class="status status-done"
+                ng-style="{ width: vm.statusDonePercentage + '%' }"
+              >
+                {{ vm.statusDonePercentage | number: 1 }}%
+              </span>
+              <span
+                class="status status-stuck"
+                ng-style="{ width: vm.statusStuckPercentage + '%' }"
+              >
+                {{ vm.statusStuckPercentage | number: 1 }}%
+              </span>
+            </td>
+
+            <!-- Priority Percentage -->
+            <td>
+              <span
+                class="priority priority-critical"
+                ng-style="{ width: vm.priorityCriticalPercentage + '%' }"
+              >
+                {{ vm.priorityCriticalPercentage | number: 1 }}%
+              </span>
+              <span
+                class="priority priority-high"
+                ng-style="{ width: vm.priorityHighPercentage + '%' }"
+              >
+                {{ vm.priorityHighPercentage | number: 1 }}%
+              </span>
+              <span
+                class="priority priority-medium"
+                ng-style="{ width: vm.priorityMediumPercentage + '%' }"
+              >
+                {{ vm.priorityMediumPercentage | number: 1 }}%
+              </span>
+              <span
+                class="priority priority-low"
+                ng-style="{ width: vm.priorityLowPercentage + '%' }"
+              >
+                {{ vm.priorityLowPercentage | number: 1 }}%
+              </span>
+              <span
+                class="priority priority-best-effort"
+                ng-style="{ width: vm.priorityBestEffortPercentage + '%' }"
+              >
+                {{ vm.priorityBestEffortPercentage | number: 1 }}%
+              </span>
+            </td>
+
+            <!-- Type Percentage -->
+            <td>
+              <span
+                class="type type-feature"
+                ng-style="{ width: vm.typeFeaturePercentage + '%' }"
+              >
+                {{ vm.typeFeaturePercentage | number: 1 }}%
+              </span>
+              <span
+                class="type type-enhancements"
+                ng-style="{ width: vm.typeEnhancementsPercentage + '%' }"
+              >
+                {{ vm.typeEnhancementsPercentage | number: 1 }}%
+              </span>
+              <span
+                class="type type-other"
+                ng-style="{ width: vm.typeOtherPercentage + '%' }"
+              >
+                {{ vm.typeOtherPercentage | number: 1 }}%
+              </span>
+              <span
+                class="type type-bug"
+                ng-style="{ width: vm.typeBugPercentage + '%' }"
+              >
+                {{ vm.typeBugPercentage | number: 1 }}%
+              </span>
+            </td>
+
+            <td style="border: none"></td>
+            <td>
+              <strong>{{ vm.totalEstimatedSP }}</strong>
+            </td>
+            <!-- Total Estimated SP -->
+            <td>
+              <strong>{{ vm.totalActualSP }}</strong>
+            </td>
+            <!-- Total Actual SP -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

@@ -1,123 +1,165 @@
-@import "bootstrap/dist/css/bootstrap.min.css";
-html, body {
-    margin: 0;
-    padding: 0;
-  }
+@import 'bootstrap/dist/css/bootstrap.min.css';
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 
-  .bg-custom {
-    background-color: #181c34;
-  }
-  .developer-cell {
-    text-align: center;
-    padding: 10px;
-    position: relative; /* Make sure it's relative to the cell */
-  }
-  
-  .developer-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #ccc;
-    cursor: pointer;
-  }
-  
-  .developer-name {
-    position: absolute;
-    top: -40%; /* Move the tooltip up relative to the icon */
-    right: -10px; /* Move the tooltip to the right of the icon */
-    background-color: #333;
-    color: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 10; /* Ensure it appears above other elements */
-  }
-  
-  .developer-cell:hover .developer-name {
-    visibility: visible;
-    opacity: 1;
-  }
+.bg-custom {
+  background-color: #181c34;
+}
+.developer-cell {
+  text-align: center;
+  padding: 10px;
+  position: relative; /* Make sure it's relative to the cell */
+}
 
-  .status {
-    padding: 2px 5px;
-    border-radius: 3px;
-    color: white; /* Optional: to make the text color white */
-  }
-  
-  .status-ready {
-    background-color: #007bff; /* Blue */
-  }
-  
-  .status-in-progress {
-    background-color: #ffc107; /* Yellow */
-    color: black; 
-  }
-  
-  .status-waiting {
-    background-color: #dc3545; /* Red */
-  }
-  
-  .status-pending {
-    background-color: #17a2b8; /* Teal */
-    color: white; 
-  }
-  
-  .status-done {
-    background-color: #28a745; /* Green */
-  }
-  
-  .status-stuck {
-    background-color: #6c757d; /* Gray */
-    color: white; 
-  }
+.developer-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ccc;
+  cursor: pointer;
+}
 
-  .priority {
-    padding: 2px 5px;
-    border-radius: 3px;
-    color: white; /* Optional: to make the text color white */
+.developer-name {
+  position: absolute;
+  top: -40%; /* Move the tooltip up relative to the icon */
+  right: -10px; /* Move the tooltip to the right of the icon */
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10; /* Ensure it appears above other elements */
+}
+
+.developer-cell:hover .developer-name {
+  visibility: visible;
+  opacity: 1;
+}
+
+.table {
+  background-color: #30344c;
+  color: white; /* Optional: to make the text color white */
+}
+
+.table th,
+.table td {
+  border-color: #30344c; /* Optional: to match the border color with the table background */
+}
+
+.status {
+  padding: 2px 5px;
+  border-radius: 3px;
+  color: white; /* Optional: to make the text color white */
+}
+
+.status-ready {
+  background-color: #007bff; /* Blue */
+}
+
+.status-in-progress {
+  background-color: #ffc107; /* Yellow */
+  color: black;
+}
+
+.status-waiting {
+  background-color: #dc3545; /* Red */
+}
+
+.status-pending {
+  background-color: #17a2b8; /* Teal */
+  color: white;
+}
+
+.status-done {
+  background-color: #28a745; /* Green */
+}
+
+.status-stuck {
+  background-color: #6c757d; /* Gray */
+  color: white;
+}
+
+.priority {
+  padding: 2px 5px;
+  border-radius: 3px;
+  color: white; /* Optional: to make the text color white */
 }
 
 .priority-critical {
-    background-color: darkred;
+  background-color: darkred;
 }
 
 .priority-high {
-    background-color: red;
+  background-color: red;
 }
 
 .priority-medium {
-    background-color: orange;
+  background-color: orange;
 }
 
 .priority-low {
-    background-color: green;
+  background-color: green;
 }
 
 .priority-best-effort {
-    background-color: blue;
+  background-color: blue;
 }
 
 .type {
-    padding: 2px 5px;
-    border-radius: 3px;
-    color: white; /* Optional: to make the text color white */
+  padding: 2px 5px;
+  border-radius: 3px;
+  color: white; /* Optional: to make the text color white */
 }
 
 .type-feature {
-    background-color: lightblue;
+  background-color: lightblue;
 }
 
 .type-enhancements {
-    background-color: lightgreen;
+  background-color: lightgreen;
 }
 
 .type-other {
-    background-color: lightgray;
+  background-color: lightgray;
 }
 
 .type-bug {
-    background-color: lightcoral;
+  background-color: lightcoral;
 }
+
+.status-bar, .priority-bar, .type-bar {
+  display: flex;
+  width: 100%;
+  height: 20px; /* Adjust height as needed */
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.status-segment, .priority-segment, .type-segment {
+  height: 100%;
+  float: left;
+}
+
+.status-ready { background-color: #007bff; }
+.status-in-progress { background-color: #ffc107; }
+.status-waiting { background-color: #dc3545; }
+.status-pending { background-color: #17a2b8; }
+.status-done { background-color: #28a745; }
+.status-stuck { background-color: #6c757d; }
+
+.priority-critical { background-color: darkred; }
+.priority-high { background-color: red; }
+.priority-medium { background-color: orange; }
+.priority-low { background-color: green; }
+.priority-best-effort { background-color: blue; }
+
+.type-feature { background-color: lightblue; }
+.type-enhancements { background-color: lightgreen; }
+.type-other { background-color: lightgray; }
+.type-bug { background-color: lightcoral; }
 
