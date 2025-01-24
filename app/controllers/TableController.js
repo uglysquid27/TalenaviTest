@@ -46,11 +46,25 @@ angular.module('myApp').controller('TableController', [
         .then(function (response) {
           console.log('Data fetched:', response.data)
           vm.items = response.data
+
+          // Populate vm.developers with unique developers
+          vm.developers = [...new Set(vm.items.map(item => item.developer))]
+
           vm.resetFilters() // Initially show all items
         })
         .catch(function (error) {
           console.error('Error fetching data:', error)
         })
+    }
+
+    // Filter by selected developer
+    vm.filterByDeveloper = function (developer) {
+      vm.searchCriteria.developer = developer // Set the selected developer in search criteria
+      vm.filteredItems = vm.items.filter(function (item) {
+        return item.developer === developer // Filter items by developer
+      })
+      vm.updateCounts() // Recalculate counts after filtering
+      vm.updateTotals() // Recalculate totals after filtering
     }
 
     // Add a new item temporarily and add it to the top of the list
@@ -113,7 +127,7 @@ angular.module('myApp').controller('TableController', [
         vm.statusCounts['Pending Deploy'] +
         vm.statusCounts['Done'] +
         vm.statusCounts['Stuck']
-        
+
       let readyPercentage =
         (vm.statusCounts['Ready to start'] / totalStatus) * 100
       let inProgressPercentage =
@@ -263,6 +277,7 @@ angular.module('myApp').controller('TableController', [
       console.log('Sorted items:', vm.filteredItems) // Log the sorted items for debugging
     }
 
+    // Reset filters and show all items
     // Reset filters and show all items
     vm.resetFilters = function () {
       vm.filteredItems = [...vm.items] // Initialize filtered items with all items

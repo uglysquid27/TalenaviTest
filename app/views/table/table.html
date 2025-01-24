@@ -123,12 +123,8 @@
   </div>
 
   <!-- Table Component -->
-  <div class="mt-3 panel panel-default">
-    <div class="panel-heading">
-      <h3>Main Table</h3>
-    </div>
-    <div class="panel-body">
-      <table class="table-bordered table">
+  <div class="py-3">
+    <table class="table-bordered table">
         <thead>
           <tr>
             <th><input type="checkbox" /></th>
@@ -142,7 +138,7 @@
             <th>Actual SP</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="table-body">
           <tr
             ng-repeat="item in vm.filteredItems"
             ng-class="{
@@ -242,9 +238,7 @@
                 ng-if="!item.isEditingDate"
                 ng-click="item.isEditingDate = true"
               >
-                {{
-                  item.date ? (item.date | date: 'MM/dd/yyyy') : '00/00/0000'
-                }}
+                {{ item.date ? (item.date | date: 'MM/dd/yyyy') : '00/00/0000' }}
               </span>
               <input
                 ng-if="item.isEditingDate"
@@ -256,7 +250,7 @@
                 autofocus
               />
             </td>
-
+    
             <td>{{ item['Estimated SP'] }}</td>
             <td>{{ item['Actual SP'] }}</td>
           </tr>
@@ -270,7 +264,7 @@
                 class="status status-ready"
                 ng-style="{ width: vm.statusReadyPercentage + '%' }"
               >
-              {{ vm.statusReadyPercentage | number:1 }}%
+                {{ vm.statusReadyPercentage | number: 1 }}%
               </span>
               <span
                 class="status status-in-progress"
@@ -303,7 +297,7 @@
                 {{ vm.statusStuckPercentage | number: 1 }}%
               </span>
             </td>
-
+    
             <!-- Priority Percentage -->
             <td>
               <span
@@ -337,7 +331,7 @@
                 {{ vm.priorityBestEffortPercentage | number: 1 }}%
               </span>
             </td>
-
+    
             <!-- Type Percentage -->
             <td>
               <span
@@ -365,7 +359,7 @@
                 {{ vm.typeBugPercentage | number: 1 }}%
               </span>
             </td>
-
+    
             <td style="border: none"></td>
             <td>
               <strong>{{ vm.totalEstimatedSP }}</strong>
@@ -378,6 +372,5 @@
           </tr>
         </tbody>
       </table>
-    </div>
   </div>
 </div>

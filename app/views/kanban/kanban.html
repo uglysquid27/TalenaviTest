@@ -1,28 +1,745 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3>Kanban Board</h3>
+<div class="container-fluid">
+  <div class="g-2 row">
+    <!-- Add New Button -->
+    <div class="col-auto">
+      <button
+        class="p-3 btn btn-primary btn-sm"
+        type="button"
+        ng-click="vm.addNewItem()"
+      >
+        <i class="bi bi-plus-circle"></i> Add New
+      </button>
     </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-4">
-                <h4>To Do</h4>
-                <ul class="list-group">
-                    <li class="list-group-item">Task 1</li>
-                    <li class="list-group-item">Task 2</li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <h4>In Progress</h4>
-                <ul class="list-group">
-                    <li class="list-group-item">Task 3</li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <h4>Done</h4>
-                <ul class="list-group">
-                    <li class="list-group-item">Task 4</li>
-                </ul>
-            </div>
+
+    <!-- Search Form -->
+    <div class="col-auto">
+      <form class="form-inline">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control form-control-sm py-1 rounded"
+            placeholder="Search tasks..."
+            ng-model="vm.searchCriteria.title"
+            ng-change="vm.searchTasks()"
+          />
         </div>
+      </form>
     </div>
+
+    <!-- Person Button -->
+    <div class="col-auto">
+      <div class="dropdown">
+        <button
+          class="py-3 btn btn-info btn-sm dropdown-toggle"
+          type="button"
+          id="personDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa fa-user-circle"></i> Person
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="personDropdown">
+          <li ng-repeat="developer in vm.developers">
+            <a
+              class="dropdown-item"
+              href="#"
+              ng-click="vm.filterByDeveloper(developer)"
+            >
+              {{ developer }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sort Dropdown -->
+    <div class="col-auto">
+      <div class="dropdown">
+        <button
+          class="p-3 btn btn-sm btn-warning dropdown-toggle"
+          type="button"
+          id="sortDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa fa-sort"></i> Sort
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+          <li>
+            <a
+              class="dropdown-item"
+              href="#"
+              ng-click="vm.toggleSortColumn('status')"
+              >Status</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              href="#"
+              ng-click="vm.toggleSortColumn('priority')"
+              >Priority</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              href="#"
+              ng-click="vm.toggleSortColumn('type')"
+              >Type</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sort Order Dropdown -->
+    <div class="col-auto">
+      <div class="dropdown">
+        <button
+          class="p-3 btn btn-secondary btn-sm dropdown-toggle"
+          type="button"
+          id="sortOrderDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Sort Order
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="sortOrderDropdown">
+          <li>
+            <a class="dropdown-item" href="#" ng-click="vm.setSortOrder('asc')"
+              >Ascending</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" href="#" ng-click="vm.setSortOrder('desc')"
+              >Descending</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div
+    style="
+      display: flex;
+      gap: 16px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 16px;
+    "
+  >
+    <div class="card" style="border: none ;width: 30rem" id="card1">
+      <div
+        class="card-header"
+        style="
+          height: 30px;
+          background-size: cover;
+          background-position: center;
+          border: none;
+          background-color: #007bff;
+          color: #f0f0f0;
+          font-weight: bold;
+        "
+      >
+        Ready to Start
+      </div>
+      <div class="card-body" style="background-color: #373750;">
+        <!-- ng-repeat to loop through filtered items -->
+        <div
+          ng-repeat="item in vm.filteredItems | filter: {status: 'Ready to Start'}"
+          style=" margin-bottom: 5px; border: 2px solid #333; background-color: #181c34; color: #f0f0f0;  padding: 5px;
+                border-radius: 4px;"
+        >
+          <p class="card-text">{{ item.title }}</p>
+          <!-- Display the title of the item -->
+          <div style="display: flex; margin-bottom: 5px;">
+            <div
+              style="
+                background-color: #2d3246;
+                border: px solid #333;
+                border-radius: 4px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+               
+                margin:2px;
+              "
+            >
+              {{item.status}}
+            </div>
+            <div
+              style="
+                background-color: #2d3246;
+                border: px solid #333;
+                border-radius: 4px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+               
+                margin:2px;
+              "
+            >
+              {{item.type}}
+            </div>
+            <div
+              style="
+                background-color: #2d3246;
+                border: px solid #333;
+                border-radius: 4px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+               
+                margin:2px;
+              "
+            >
+              {{item['Estimated SP']}} SP
+            </div>
+          </div>
+          <div>
+            <svg
+              class="developer-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24px"
+              height="24px"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                opacity="0.5"
+                d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                fill="#1C274C"
+              />
+              <path
+                d="M16.807 19.0112C15.4398 19.9504 13.7841 20.5 12 20.5C10.2159 20.5 8.56023 19.9503 7.193 19.0111C6.58915 18.5963 6.33109 17.8062 6.68219 17.1632C7.41001 15.8302 8.90973 15 12 15C15.0903 15 16.59 15.8303 17.3178 17.1632C17.6689 17.8062 17.4108 18.5964 16.807 19.0112Z"
+                fill="#1C274C"
+              />
+              <path
+                d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3432 6 9.00004 7.34315 9.00004 9C9.00004 10.6569 10.3432 12 12 12Z"
+                fill="#1C274C"
+              />
+            </svg>
+            <span class="developer-name" ng-show="true">{{
+              item.developer
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border: none ; width: 30rem" id="card1">
+        <div
+          class="card-header"
+          style="
+            height: 30px;
+            background-size: cover;
+            background-position: center;
+            border: none;
+            background-color: #ffc107;
+            color: #f0f0f0;
+            font-weight: bold;
+          "
+        >
+          In Progress
+        </div>
+        <div class="card-body" style="background-color: #373750;">
+          <!-- ng-repeat to loop through filtered items -->
+          <div
+            ng-repeat="item in vm.filteredItems | filter: {status: 'In Progress'}"
+            style=" margin-bottom: 5px; border: 2px solid #333; background-color: #181c34; color: #f0f0f0;  padding: 5px;
+                  border-radius: 4px;"
+          >
+            <p class="card-text">{{ item.title }}</p>
+            <!-- Display the title of the item -->
+            <div style="display: flex; margin-bottom: 5px;">
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item.status}}
+              </div>
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item.type}}
+              </div>
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item['Estimated SP']}} SP
+              </div>
+            </div>
+            <div>
+              <svg
+                class="developer-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  opacity="0.5"
+                  d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                  fill="#1C274C"
+                />
+                <path
+                  d="M16.807 19.0112C15.4398 19.9504 13.7841 20.5 12 20.5C10.2159 20.5 8.56023 19.9503 7.193 19.0111C6.58915 18.5963 6.33109 17.8062 6.68219 17.1632C7.41001 15.8302 8.90973 15 12 15C15.0903 15 16.59 15.8303 17.3178 17.1632C17.6689 17.8062 17.4108 18.5964 16.807 19.0112Z"
+                  fill="#1C274C"
+                />
+                <path
+                  d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3432 6 9.00004 7.34315 9.00004 9C9.00004 10.6569 10.3432 12 12 12Z"
+                  fill="#1C274C"
+                />
+              </svg>
+              <span class="developer-name" ng-show="true">{{
+                item.developer
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border: none ; width: 30rem" id="card1">
+        <div
+          class="card-header"
+          style="
+            height: 30px;
+            background-size: cover;
+            background-position: center;
+            border: none;
+            background-color: #dc3545;
+            color: #f0f0f0;
+            font-weight: bold;
+          "
+        >
+          Waiting for Review
+        </div>
+        <div class="card-body" style="background-color: #373750;">
+          <!-- ng-repeat to loop through filtered items -->
+          <div
+            ng-repeat="item in vm.filteredItems | filter: {status: 'Waiting for Review'}"
+            style=" margin-bottom: 5px; border: 2px solid #333; background-color: #181c34; color: #f0f0f0;  padding: 5px;
+                  border-radius: 4px;"
+          >
+            <p class="card-text">{{ item.title }}</p>
+            <!-- Display the title of the item -->
+            <div style="display: flex; margin-bottom: 5px;">
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item.status}}
+              </div>
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item.type}}
+              </div>
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item['Estimated SP']}} SP
+              </div>
+            </div>
+            <div>
+              <svg
+                class="developer-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  opacity="0.5"
+                  d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                  fill="#1C274C"
+                />
+                <path
+                  d="M16.807 19.0112C15.4398 19.9504 13.7841 20.5 12 20.5C10.2159 20.5 8.56023 19.9503 7.193 19.0111C6.58915 18.5963 6.33109 17.8062 6.68219 17.1632C7.41001 15.8302 8.90973 15 12 15C15.0903 15 16.59 15.8303 17.3178 17.1632C17.6689 17.8062 17.4108 18.5964 16.807 19.0112Z"
+                  fill="#1C274C"
+                />
+                <path
+                  d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3432 6 9.00004 7.34315 9.00004 9C9.00004 10.6569 10.3432 12 12 12Z"
+                  fill="#1C274C"
+                />
+              </svg>
+              <span class="developer-name" ng-show="true">{{
+                item.developer
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border: none ; width: 30rem" id="card1">
+        <div
+          class="card-header"
+          style="
+            height: 30px;
+            background-size: cover;
+            background-position: center;
+            border: none;
+            background-color: #17a2b8;
+            color: #f0f0f0;
+            font-weight: bold;
+          "
+        >
+          Pending Deploy
+        </div>
+        <div class="card-body" style="background-color: #373750;">
+          <!-- ng-repeat to loop through filtered items -->
+          <div
+            ng-repeat="item in vm.filteredItems | filter: {status: 'Pending Deploy'}"
+            style=" margin-bottom: 5px; border: 2px solid #333; background-color: #181c34; color: #f0f0f0;  padding: 5px;
+                  border-radius: 4px;"
+          >
+            <p class="card-text">{{ item.title }}</p>
+            <!-- Display the title of the item -->
+            <div style="display: flex; margin-bottom: 5px;">
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item.status}}
+              </div>
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item.type}}
+              </div>
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item['Estimated SP']}} SP
+              </div>
+            </div>
+            <div>
+              <svg
+                class="developer-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  opacity="0.5"
+                  d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                  fill="#1C274C"
+                />
+                <path
+                  d="M16.807 19.0112C15.4398 19.9504 13.7841 20.5 12 20.5C10.2159 20.5 8.56023 19.9503 7.193 19.0111C6.58915 18.5963 6.33109 17.8062 6.68219 17.1632C7.41001 15.8302 8.90973 15 12 15C15.0903 15 16.59 15.8303 17.3178 17.1632C17.6689 17.8062 17.4108 18.5964 16.807 19.0112Z"
+                  fill="#1C274C"
+                />
+                <path
+                  d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3432 6 9.00004 7.34315 9.00004 9C9.00004 10.6569 10.3432 12 12 12Z"
+                  fill="#1C274C"
+                />
+              </svg>
+              <span class="developer-name" ng-show="true">{{
+                item.developer
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border: none ; width: 30rem" id="card1">
+        <div
+          class="card-header"
+          style="
+            height: 30px;
+            background-size: cover;
+            background-position: center;
+            border: none;
+            background-color: #28a745;
+            color: #f0f0f0;
+            font-weight: bold;
+          "
+        >
+          Done
+        </div>
+        <div class="card-body" style="background-color: #373750;">
+          <!-- ng-repeat to loop through filtered items -->
+          <div
+            ng-repeat="item in vm.filteredItems | filter: {status: 'Done'}"
+            style=" margin-bottom: 5px; border: 2px solid #333; background-color: #181c34; color: #f0f0f0;  padding: 5px;
+                  border-radius: 4px;"
+          >
+            <p class="card-text">{{ item.title }}</p>
+            <!-- Display the title of the item -->
+            <div style="display: flex; margin-bottom: 5px;">
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item.status}}
+              </div>
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item.type}}
+              </div>
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item['Estimated SP']}} SP
+              </div>
+            </div>
+            <div>
+              <svg
+                class="developer-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  opacity="0.5"
+                  d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                  fill="#1C274C"
+                />
+                <path
+                  d="M16.807 19.0112C15.4398 19.9504 13.7841 20.5 12 20.5C10.2159 20.5 8.56023 19.9503 7.193 19.0111C6.58915 18.5963 6.33109 17.8062 6.68219 17.1632C7.41001 15.8302 8.90973 15 12 15C15.0903 15 16.59 15.8303 17.3178 17.1632C17.6689 17.8062 17.4108 18.5964 16.807 19.0112Z"
+                  fill="#1C274C"
+                />
+                <path
+                  d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3432 6 9.00004 7.34315 9.00004 9C9.00004 10.6569 10.3432 12 12 12Z"
+                  fill="#1C274C"
+                />
+              </svg>
+              <span class="developer-name" ng-show="true">{{
+                item.developer
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border: none ; width: 30rem" id="card1">
+        <div
+          class="card-header"
+          style="
+            height: 30px;
+            background-size: cover;
+            background-position: center;
+            border: none;
+            background-color: #6c757d;
+            color: #f0f0f0;
+            font-weight: bold;
+          "
+        >
+          Stuck
+        </div>
+        <div class="card-body" style="background-color: #373750;">
+          <!-- ng-repeat to loop through filtered items -->
+          <div
+            ng-repeat="item in vm.filteredItems | filter: {status: 'Stuck'}"
+            style=" margin-bottom: 5px; border: 2px solid #333; background-color: #181c34; color: #f0f0f0;  padding: 5px;
+                  border-radius: 4px;"
+          >
+            <p class="card-text">{{ item.title }}</p>
+            <!-- Display the title of the item -->
+            <div style="display: flex; margin-bottom: 5px;">
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item.status}}
+              </div>
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item.type}}
+              </div>
+              <div
+                style="
+                  background-color: #2d3246;
+                  border: px solid #333;
+                  border-radius: 4px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                 
+                  margin:2px;
+                "
+              >
+                {{item['Estimated SP']}} SP
+              </div>
+            </div>
+            <div>
+              <svg
+                class="developer-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  opacity="0.5"
+                  d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                  fill="#1C274C"
+                />
+                <path
+                  d="M16.807 19.0112C15.4398 19.9504 13.7841 20.5 12 20.5C10.2159 20.5 8.56023 19.9503 7.193 19.0111C6.58915 18.5963 6.33109 17.8062 6.68219 17.1632C7.41001 15.8302 8.90973 15 12 15C15.0903 15 16.59 15.8303 17.3178 17.1632C17.6689 17.8062 17.4108 18.5964 16.807 19.0112Z"
+                  fill="#1C274C"
+                />
+                <path
+                  d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3432 6 9.00004 7.34315 9.00004 9C9.00004 10.6569 10.3432 12 12 12Z"
+                  fill="#1C274C"
+                />
+              </svg>
+              <span class="developer-name" ng-show="true">{{
+                item.developer
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
 </div>

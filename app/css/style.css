@@ -11,7 +11,7 @@ body {
 .developer-cell {
   text-align: center;
   padding: 10px;
-  position: relative; /* Make sure it's relative to the cell */
+  position: relative;
 }
 
 .developer-icon {
@@ -24,8 +24,8 @@ body {
 
 .developer-name {
   position: absolute;
-  top: -40%; /* Move the tooltip up relative to the icon */
-  right: -10px; /* Move the tooltip to the right of the icon */
+  top: -40%;
+  right: -10px;
   background-color: #333;
   color: #fff;
   padding: 5px;
@@ -33,7 +33,7 @@ body {
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.3s ease;
-  z-index: 10; /* Ensure it appears above other elements */
+  z-index: 10;
 }
 
 .developer-cell:hover .developer-name {
@@ -43,51 +43,78 @@ body {
 
 .table {
   background-color: #30344c;
-  color: white; /* Optional: to make the text color white */
+  color: #fff;
 }
 
-.table th,
-.table td {
-  border-color: #30344c; /* Optional: to match the border color with the table background */
+.table th {
+  background-color: #30344c;
+  color: #fff;
+}
+
+.table-bordered {
+  background-color: #383454;
+  color: #fff;
+}
+
+.table {
+  --bs-table-bg: #383454;
+  --bs-table-color: #fff;
+  --bs-border-color: #484b67;
+}
+
+.table>:not(caption)>*>* {
+  padding: .5rem .5rem;
+  color: var(--bs-table-color, #fff);
+  background-color: var(--bs-table-bg, #383454);
+  border-bottom-width: var(--bs-border-width);
+  border-color: var(--bs-border-color, #484b67);
+  box-shadow: inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));
+}
+
+.table-bordered>tbody>tr>td,
+.table-bordered>tbody>tr>th,
+.table-bordered>tfoot>tr>td,
+.table-bordered>tfoot>tr>th,
+.table-bordered>thead>tr>td,
+.table-bordered>thead>tr>th {
+  border: 1px solid #484b67;
 }
 
 .status {
   padding: 2px 5px;
-  border-radius: 3px;
-  color: white; /* Optional: to make the text color white */
+  color: white;
 }
 
 .status-ready {
-  background-color: #007bff; /* Blue */
+  background-color: #007bff;
 }
 
 .status-in-progress {
-  background-color: #ffc107; /* Yellow */
+  background-color: #ffc107;
   color: black;
 }
 
 .status-waiting {
-  background-color: #dc3545; /* Red */
+  background-color: #dc3545;
 }
 
 .status-pending {
-  background-color: #17a2b8; /* Teal */
+  background-color: #17a2b8;
   color: white;
 }
 
 .status-done {
-  background-color: #28a745; /* Green */
+  background-color: #28a745;
 }
 
 .status-stuck {
-  background-color: #6c757d; /* Gray */
+  background-color: #6c757d;
   color: white;
 }
 
 .priority {
   padding: 2px 5px;
-  border-radius: 3px;
-  color: white; /* Optional: to make the text color white */
+  color: white;
 }
 
 .priority-critical {
@@ -112,8 +139,7 @@ body {
 
 .type {
   padding: 2px 5px;
-  border-radius: 3px;
-  color: white; /* Optional: to make the text color white */
+  color: white;
 }
 
 .type-feature {
@@ -135,7 +161,7 @@ body {
 .status-bar, .priority-bar, .type-bar {
   display: flex;
   width: 100%;
-  height: 20px; /* Adjust height as needed */
+  height: 20px;
   border-radius: 3px;
   overflow: hidden;
 }
@@ -162,4 +188,3 @@ body {
 .type-enhancements { background-color: lightgreen; }
 .type-other { background-color: lightgray; }
 .type-bug { background-color: lightcoral; }
-

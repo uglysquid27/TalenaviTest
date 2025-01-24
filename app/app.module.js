@@ -11,7 +11,7 @@ myApp.component('tableComponent', {
 // Register the kanban component
 myApp.component('kanban', {
   templateUrl: 'app/views/kanban/kanban.html',  // Path to the Kanban view HTML
-  controller: 'KanbanController',  // The controller for the kanban component
+  controller: 'TableController',  // The controller for the kanban component
   controllerAs: 'vm',  // Alias for the controller (optional)
 });
 
