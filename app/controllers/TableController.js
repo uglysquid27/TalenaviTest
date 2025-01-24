@@ -242,6 +242,14 @@ angular.module('myApp').controller('TableController', [
       vm.updateTotals()
     }
 
+    vm.searchTasks = function () {
+      vm.filteredItems = vm.items.filter(function (item) {
+        return item.title.toLowerCase().includes(vm.searchCriteria.title.toLowerCase());
+      });
+      vm.updateCounts();
+      vm.updateTotals();
+    };
+
     vm.resetFilters = function () {
       vm.filteredItems = [...vm.items]
       vm.searchCriteria = {
